@@ -4,8 +4,7 @@ var express = require('express'),
     app     = express(),
     eps     = require('ejs'),
     morgan  = require('morgan'),
-    mongodb = require('mongodb'),
-    aboutPage = require('about.js');
+    mongodb = require('mongodb');
 
 Object.assign=require('object-assign');
 
