@@ -105,3 +105,7 @@ app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
+
+setInterval(function() {
+    console.log('are we still running?', '');
+}, 1000);
