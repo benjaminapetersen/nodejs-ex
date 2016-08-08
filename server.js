@@ -46,9 +46,11 @@ var db = null,
     dbDetails = {};
 
 var initDb = function(callback) {
-  // if (mongoURL === null) return;
+  console.log('TODO: put this back, rather than call callback() immediately...');
+  callback();
+  // if (mongoURL == null) return;
   //
-  // if (mongodb === null) return;
+  // if (mongodb == null) return;
   //
   // mongodb.connect(mongoURL, function(err, conn) {
   //   if (err) {
