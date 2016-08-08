@@ -3,27 +3,24 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
-    morgan  = require('morgan'),
-    mongodb = require('mongodb');
+    morgan  = require('morgan');
 
-Object.assign=require('object-assign');
+Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'));
+app.use(morgan('combined'))
 
-// Bootstrapping, env vars, etc
-// ------------------------------------
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-if (!mongoURL && process.env.DATABASE_SERVICE_NAME) {
+if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
       mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
-      mongoPassword = process.env[mongoServiceName + '_PASSWORD'],
+      mongoPassword = process.env[mongoServiceName + '_PASSWORD']
       mongoUser = process.env[mongoServiceName + '_USER'];
 
   if (mongoHost && mongoPort && mongoDatabase) {
@@ -37,16 +34,14 @@ if (!mongoURL && process.env.DATABASE_SERVICE_NAME) {
 
   }
 }
-
-// DB Setup
-// ------------------------------------
 var db = null,
-    dbDetails = {};
+    dbDetails = new Object();
 
 var initDb = function(callback) {
-  if (mongoURL === null) return;
+  if (mongoURL == null) return;
 
-  if (mongodb === null) return;
+  var mongodb = require('mongodb');
+  if (mongodb == null) return;
 
   mongodb.connect(mongoURL, function(err, conn) {
     if (err) {
@@ -63,44 +58,37 @@ var initDb = function(callback) {
   });
 };
 
-var initDBThen = function(fn, errFn) {
+app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
     initDb(function(err){});
   }
   if (db) {
-    fn();
-  } else {
-    errFn();
-  }
-};
-
-
-// App Routes
-// ------------------------------------
-app.get('/', function (req, res) {
-  initDBThen(function() {
     var col = db.collection('counts');
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
     col.count(function(err, count){
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
-  }, function() {
+  } else {
     res.render('index.html', { pageCountMessage : null});
-  });
-
+  }
 });
 
 app.get('/pagecount', function (req, res) {
-  initDBThen(function() {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
     db.collection('counts').count(function(err, count ){
       res.send('{ pageCount: ' + count + '}');
     });
-  }, function() {
+  } else {
     res.send('{ pageCount: -1 }');
-  });
+  }
 });
 
 // error handling
@@ -116,4 +104,4 @@ initDb(function(err){
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
-module.exports = app;
+module.exports = app ;
