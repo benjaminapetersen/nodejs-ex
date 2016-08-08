@@ -4,6 +4,7 @@
   "description": "Node.js sample app for OpenShift 3",
   "main": "server.js",
   "dependencies": {
+    "bower": "latest",
     "chai": "latest",
     "chai-http": "latest",
     "ejs": "latest",
@@ -11,7 +12,7 @@
     "mocha": "latest",
     "mongodb": "latest",
     "morgan": "latest",
-    "object-assign":"latest"
+    "object-assign": "latest"
   },
   "engine": {
     "node": "*",
@@ -25,10 +26,16 @@
     "type": "git",
     "url": "http://github.com/openshift/nodejs-ex.git"
   },
-  "author": "Steve Speicher <sspeiche@gmail.com>",
+  "authors": [
+    "Steve Speicher <sspeiche@gmail.com>",
+    "Benjamin A. Petersen <ben@benjaminapetersen.me>",
+  ],
   "license": "CC-BY-1.0",
   "bugs": {
     "url": "http://github.com/openshift/nodejs-ex/issues"
   },
-  "homepage": "http://github.com/openshift/nodejs-ex"
+  "homepage": "http://github.com/openshift/nodejs-ex",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
 }

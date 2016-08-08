@@ -3,14 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Node.js Ex ToDos on OpenShift</title>
+    <link rel="stylesheet" href="bower_components/layout.attrs/dist/layout.attrs.css" />
   </head>
   <body>
 
-    <section class="container">
-      <hgroup>
-        <h1>Node.js Ex ToDos</h1>
-      </hgroup>
-    </section>
-
+    <div layout row reverse align-items="center" outline>
+      <div flex outline>
+        <h1>Todos using flexbox layout</h1>
+        <p>
+          But only if i can get something running...
+        </p>
+      </div outline>
+      <div layout row mobile="column" tablet="column" outline>
+        <div flex resize="2 2" outline>flex bar</div>
+        <div flex scrollable outline>
+          lorem ipsum......
+        </div>
+      </div>
+      <div outline>no flex.</div>
+      <div conceal="mobile tablet" outline>Hidden on mobile and tablet</div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+      $(function() {
+        $('h1').css({
+          border: '1px dashed #990000'
+        });
+      })
+    </script>
   </body>
 </html>

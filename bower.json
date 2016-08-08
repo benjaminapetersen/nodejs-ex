@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-ex",
+  "description": "Node.js sample app for OpenShift 3",
+  "main": "server.js",
+  "authors": [
+    "Steve Speicher <sspeiche@gmail.com>",
+    "Benjamin A. Petersen <ben@benjaminapetersen.me>",
+  ],
+  "license": "CC-BY-1.0",
+  "homepage": "https://github.com/benjaminapetersen/nodejs-ex-todo-on-openshift",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "layout.attrs": "^2.1.1"
+  }
+}
